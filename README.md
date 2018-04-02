@@ -23,7 +23,7 @@ The technologies used to develop the application are as following:
 - liquibase (database versioning)
 - Spring cache
 
-For continuous integration [Circle ci](https://circleci.com/gh/a-mekaoui/challenge) is used and you can find a live demo of the currency converter application [here](https://currency-converter-application.herokuapp.com/conversion)
+For continuous integration [Circle ci](https://circleci.com/gh/a-mekaoui/challenge) is used and you can find a live demo of the currency converter application [here](https://currency-converter-appli.herokuapp.com)
 
 # Getting started
 
