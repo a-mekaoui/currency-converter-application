@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rates Conversion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div id="main" class="container">
+    <div class="row">
+        <h2>Welcome to the currency conversion application</h2>
+    </div>
+    <form name="conversionform" th:action="@{/conversion}" th:object="${conversionform}" class="form-horizontal"
+          method="POST">
+        <div th:if="${#fields.hasErrors('global')}"
+             class="alert alert-danger" role="alert">
+            <strong th:each="err : ${#fields.globalErrors()}" th:text="${err}"></strong>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('*{sourceAmount}')}? has-error">
+            <label class="control-label col-sm-2" for="amount">Amount To Convert</label>
+            <div class="col-sm-5">
+                <input id="amount" type="number" step="any"
+                       th:field="*{sourceAmount}"
+                       class="form-control"
+                       placeholder="0.00" autofocus="true"/>
+                <span class="help-block" th:if="${#fields.hasErrors('sourceAmount')}" th:errors="*{sourceAmount}">
+                                </span>
+            </div>
+        </div>
+
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('*{historyDate}')}? has-error">
+            <label class="control-label col-sm-2" for="historyDate">History Date</label>
+            <div class="col-sm-5">
+                <input type="text" too--pattern="\d{1,2}/\d{1,2}/\d{4}" id="historyDate" placeholder="dd/mm/yyyy (leave blank to have latest rate conversion)"
+                       th:field="*{historyDate}"
+                       class="form-control"/>
+                <span class="help-block" th:if="${#fields.hasErrors('historyDate')}"
+                      th:errors="*{historyDate}"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('*{sourceCurrency}')}? has-error">
+            <label class="control-label col-sm-2" for="baseCurrencyLatest">Base Currency</label>
+            <div class="col-sm-5">
+
+                <select th:field="*{sourceCurrency}" class="form-control"
+                        id="baseCurrencyLatest">
+                    <option value="">Select...</option>
+                    <option th:each="baseCurrency : ${basecurrencies}"
+                            th:value="${baseCurrency}"
+                            th:text="${baseCurrency}"></option>
+                </select>
+                <span class="help-block" th:if="${#fields.hasErrors('sourceCurrency')}"
+                      th:errors="*{sourceCurrency}">
+                                </span>
+            </div>
+        </div>
+
+        <div class="form-group" th:classappend="${#fields.hasErrors('*{targetCurrency}')}? has-error">
+            <label class="control-label col-sm-2" for="targetcurrency">Target Currency</label>
+            <div class="col-sm-5">
+                <select th:field="*{targetCurrency}" class="form-control"
+                        id="targetcurrency">
+                    <option value="">Select...</option>
+                    <option th:each="targetCurrency : ${targetcurrencies}"
+                            th:value="${targetCurrency}"
+                            th:text="${targetCurrency}"></option>
+                </select>
+                <span class="help-block" th:if="${#fields.hasErrors('targetCurrency')}"
+                      th:errors="*{targetCurrency}">
+                                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input id="convert" type="submit" class="btn btn-sm btn-primary" value="Convert"/>
+                <a href="/logout" class="btn btn-sm btn-primary">Logout</a>
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="form-horizontal">
+        <div class="form-group"
+             th:classappend="${#fields.hasErrors('${conversionform.targetAmount}')}? has-error">
+            <label for="amount" class="control-label col-sm-2">Result</label>
+            <div class="col-sm-5">
+                <input
+                        type="text" id="targetamount" th:field="${conversionform.targetAmount}" class="form-control"
+                        placeholder="0.00" autofocus="true" readonly/> <span class="help-block"
+                                                                             th:if="${#fields.hasErrors('conversionform.targetAmount')}"
+                                                                             th:errors="${conversionform.targetAmount}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+
+        <div th:if="${not #lists.isEmpty(historicalRateForms)}">
+            <h2>Historical rates</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Query Date</th>
+                    <th>Source Currency</th>
+                    <th>Source Amount</th>
+                    <th>Target Currency</th>
+                    <th>Target Amount</th>
+                    <th>Query Type</th>
+                    <th>Historical Date</th>
+                </tr>
+                <tr th:each="rate : ${historicalRateForms}">
+                    <td th:text="${#dates.format(rate.queryDate, 'dd-MMM-yyyy HH:mm:ss')}">queryDate</td>
+                    <td th:text="${rate.sourceCurrency}">sourceCurrency</td>
+                    <td th:text="${rate.sourceAmount}">sourceAmount</td>
+                    <td th:text="${rate.targetCurrency}">targetCurrency</td>
+                    <td th:text="${rate.targetAmount}">targetAmount</td>
+                    <td th:text="${rate.queryType}">queryType</td>
+                    <td th:text="${rate.historicalDate}">historicalDate</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

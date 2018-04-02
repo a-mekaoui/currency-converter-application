@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register Account</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+
+<body>
+<div id="main" class="container">
+
+    <form name="form" th:object="${customer}" th:action="@{/signup}" method="POST">
+        <div class="row"><h2 class="form-signin-heading">Register Your Account</h2></div>
+
+
+        <div class="row"><p>If you already have an account, please login at <a th:href="@{'/login'}">the login page</a>
+        </p></div>
+
+
+        <div th:if="${#fields.hasErrors('global')}" class="alert alert-danger" role="alert">
+            <strong th:each="err : ${#fields.globalErrors()}" th:text="${err}"></strong>
+        </div>
+
+        <div class="row">
+            <div class="form-group" th:classappend="${#fields.hasErrors('*{email}')}? has-error">
+                <div class="input-group">
+                    <label for="email" class="control-label">Email</label>
+                    <input id="email"
+                           type="text" th:field="*{email}" class="form-control"
+                           placeholder="email@email.com" autofocus="true"/>
+                    <span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('password')}? has-error">
+                <div class="input-group-sm">
+                    <label for="password" class="control-label">Password</label>
+                    <input id="password"
+                           type="password" th:field="*{password}" class="form-control"
+                           placeholder="Password"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('confirmPassword')}? has-error">
+                <div class="input-group-sm">
+                    <label for="confirmPassword" class="control-label">
+                        Confirm password
+                    </label>
+                    <input id="confirmPassword" type="password" th:field="*{confirmPassword}"
+                           class="form-control" placeholder="Confirm your password"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('confirmPassword')}"
+                          th:errors="*{confirmPassword}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('*{birthDate}')}? has-error">
+                <div class="input-group">
+                    <label for="birthdate" class="control-label">Birthday</label>
+                    <input id="birthdate" type="text"
+                           th:field="*{birthDate}" class="form-control" name="date"
+                           placeholder="dd/mm/yyyy"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('birthDate')}"
+                          th:errors="*{birthDate}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('*{addressForm.street}')}? has-error">
+                <div class="input-group">
+                    <label for="street" class="control-label">Address</label>
+                    <input id="street"
+                           type="text"
+                           th:field="${customer.addressForm.street}" class="form-control"
+                           placeholder="Street, Number"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('addressForm.street')}"
+                          th:errors="${customer.addressForm.street}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('*{addressForm.zipCode}')}? has-error">
+                <div class="input-group">
+                    <label for="zipCode" class="control-label">Zip code</label>
+                    <input id="zipCode"
+                           type="text" th:field="${customer.addressForm.zipCode}" class="form-control"
+                           placeholder="Zip Code"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('addressForm.zipCode')}"
+                          th:errors="${customer.addressForm.zipCode}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('*{addressForm.city}')}? has-error">
+                <div class="input-group">
+                    <label for="city" class="control-label">City</label>
+                    <input id="city"
+                           type="text" th:field="${customer.addressForm.city}" class="form-control"
+                           placeholder="City"/>
+                    <span class="help-block"
+                          th:if="${#fields.hasErrors('addressForm.city')}"
+                          th:errors="${customer.addressForm.city}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group"
+                 th:classappend="${#fields.hasErrors('*{addressForm.country}')}? has-error">
+                <div class="input-group">
+                    <label for="country" class="control-label">Country</label>
+                    <select id="country" th:field="*{addressForm.country}" class="form-control">
+                        <option value="">Select...</option>
+                        <option th:each="country : ${countries}" th:value="${country}"
+                                th:text="${country}"></option>
+                    </select>
+                    <span class="help-block" th:if="*{#fields.hasErrors('addressForm.country')}"
+                          th:errors="*{addressForm.country}">
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="text-center">
+            <input id="register" type="submit" class="btn btn-lg btn-primary" value="Continue"/>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

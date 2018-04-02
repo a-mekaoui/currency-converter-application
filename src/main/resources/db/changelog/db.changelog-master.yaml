@@ -1,0 +1,125 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: amekaoui
+      changes:
+        - createTable:
+            tableName: USER_CREDENTIAL
+            columns:
+              - column:
+                  name: EMAIL
+                  type: varchar2(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: PASSWORD
+                  type: varchar2(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: AUTHORITY
+                  type: varchar2(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: BIRTH_DATE
+                  type: date
+              - column:
+                  name: STREET
+                  type: varchar2(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ZIP_CODE
+                  type: VARCHAR2(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: CITY
+                  type: VARCHAR2(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: COUNTRY
+                  type: VARCHAR2(255)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: amekaoui
+      changes:
+        - createTable:
+            tableName: HISTORICAL_RATE
+            columns:
+               - column:
+                   name: ID
+                   type: BIGINT
+                   autoIncrement: true
+                   constraints:
+                     primaryKey: true
+                     nullable: false
+               - column:
+                   name: USER_CREDENTIAL_EMAIL
+                   type: VARCHAR2(255)
+                   constraints:
+                     foreignKeyName: FK_USER_CREDENTIAL_EMAIL
+                     references: USER_CREDENTIAL(EMAIL)
+                     nullable: false
+
+               - column:
+                   name: SOURCE_AMOUNT
+                   type: VARCHAR2(255)
+               - column:
+                   name: TARGET_AMOUNT
+                   type: VARCHAR2(255)
+               - column:
+                   name: SOURCE_CURRENCY
+                   type: VARCHAR2(255)
+               - column:
+                   name: TARGET_CURRENCY
+                   type: VARCHAR2(7)
+               - column:
+                   name: HISTORICAL_DATE
+                   type: VARCHAR2(10)
+
+               - column:
+                   name: QUERY_DATE
+                   type: TIMESTAMP
+
+               - column:
+                   name: QUERY_TYPE
+                   type: VARCHAR2(255)
+
+# TODO remove
+  - changeSet:
+      id: 3
+      author: amekaoui
+      changes:
+        - insert:
+            tableName: USER_CREDENTIAL
+            columns:
+              - column:
+                  name: PASSWORD
+                  value: $2a$10$fx3DJpvpCo2QtrNMv5Rkp.H9FCToWzKDUgyCsy1Ugi9AmmM/U4doS
+              - column:
+                  name: EMAIL
+                  value: test@test.com
+              - column:
+                  name: AUTHORITY
+                  value: ROLE_USER
+              - column:
+                  name: BIRTH_DATE
+                  value: "1980-01-01"
+              - column:
+                  name: STREET
+                  value: test
+              - column:
+                  name: ZIP_CODE
+                  value: test
+              - column:
+                  name: CITY
+                  value: test
+              - column:
+                  name: COUNTRY
+                  value: BELGIUM
