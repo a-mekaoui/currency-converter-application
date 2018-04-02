@@ -1,5 +1,5 @@
 # Currency converter application
-[![Circle CI](https://circleci.com/gh/a-mekaoui/currency-converter-application.svg?style=svg&circle-token=4aef8bd23970e13ff5dee6f4a843a898985619ef)](https://circleci.com/gh/a-mekaoui/challenge)
+[![Circle CI](https://circleci.com/gh/a-mekaoui/currency-converter-application.svg?style=svg&circle-token=4aef8bd23970e13ff5dee6f4a843a898985619ef)](https://circleci.com/gh/a-mekaoui/currency-converter-application)
 This application essentially allows to convert some currencies.
 The conversion can be done in two ways: either by querying the latest conversion rate or by choosing a date so as to have an overview of the conversion to an earlier date.
 
