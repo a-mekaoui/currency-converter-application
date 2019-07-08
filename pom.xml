@@ -188,7 +188,7 @@
                     <!-- Produces XML report -->
                     <xmlOutput>true</xmlOutput>
                     <!-- Configures the directory in which the XML report is created -->
-                    <findbugsXmlOutputDirectory>${project.build.directory}/findbugs</findbugsXmlOutputDirectory>
+                    <findbugsXmlOutputDirectory>${project.build.directory}</findbugsXmlOutputDirectory>
                 </configuration>
                 <executions>
                     <!--
